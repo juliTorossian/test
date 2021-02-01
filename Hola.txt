@@ -1,6 +1,0 @@
-Hola como andas?
--Todo bien, vos?
-Bien aca andamos
-
-
-otra actualizacion desde VScode
