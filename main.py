@@ -74,7 +74,8 @@ def ImprimirRegistros():
 
 def FileTxt():
     # nombre = 'export - ' ++'.txt'
-    f = open("fichero_num_%s.txt" % time.strftime("%x") , 'w')
+    # f = open("fichero_num_%s.txt" % time.strftime("%x") , 'w')
+    f = open('Export test.txt' , 'w')
     x = len(listaRegistros)
     f.write('NUM | Trabajo |  Fecha   | hora inicio | Hora Final | Estado | Observaciones')
     for i in range(x):
@@ -106,7 +107,7 @@ while True:
             print('Registro creado satisfactoriamente')
     if comando == 'cerrar registro':
         ImprimirRegistros()
-        regACerrar = input('Registro a cerrar:\n')
+        regACerrar = input('\nRegistro a cerrar:\n')
         if (listaRegistros[int(regACerrar)].Getestado()) == 'abierto':
             listaRegistros[int(regACerrar)].SethoraCierre(time.strftime("%X"))
             listaRegistros[int(regACerrar)].Setestado('cerrado')
@@ -115,9 +116,8 @@ while True:
             print('El registro ya esta cerrado')
     if comando == 'ver registro':
         ImprimirRegistros()
-        regAVer = input('Registro a ver:\n')
+        regAVer = input('\nRegistro a ver:\n')
         listaRegistros[int(regAVer)].VerRegistro()
-        print('\n')
     if comando == 'export':
         FileTxt()
 
