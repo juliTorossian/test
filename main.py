@@ -73,14 +73,34 @@ def ImprimirRegistros():
         print(str(i) +'   | ' +listaRegistros[i].Gettrabajo() +' | ' +listaRegistros[i].GetfechaReg() +' |   ' +listaRegistros[i].GethoraInicio() +'  |  ' +listaRegistros[i].GethoraCierre() +'  | ' +listaRegistros[i].Getestado())
 
 def FileTxt():
-    # nombre = 'export - ' ++'.txt'
-    # f = open("fichero_num_%s.txt" % time.strftime("%x") , 'w')
-    f = open('Export test.txt' , 'w')
+    nombre = 'export - ' +time.strftime("%x")+'.txt'
+    print(nombre)
     x = len(listaRegistros)
-    f.write('NUM | Trabajo |  Fecha   | hora inicio | Hora Final | Estado | Observaciones')
+    hayCerrado = False
     for i in range(x):
-        f.write(str(i) +'   | ' +listaRegistros[i].Gettrabajo() +' | ' +listaRegistros[i].GetfechaReg() +' |   ' +listaRegistros[i].GethoraInicio() +'  |  ' +listaRegistros[i].GethoraCierre() +'  | ' +listaRegistros[i].Getestado() +' | ' +listaRegistros[i].Getobvs())
-    f.close()
+        if listaRegistros[i].Getestado() == 'abierto':
+            hayCerrado = True
+            registroSinCerrar = str(i)
+    if hayCerrado == True:
+        seguro = input('Registro N° ' +registroSinCerrar +' sin cerrar, Desea continuar? ( S | N )\n')
+        if seguro == 'S' or seguro == 's':
+            f = open(''+nombre , 'w')
+            f.write('NUM | Trabajo |  Fecha   | hora inicio | Hora Final | Estado  | Observaciones\n')
+            for i in range(x):
+                if listaRegistros[i].Getestado() == 'abierto':
+                    f.write(str((i + 1)) +'   | ' +listaRegistros[i].Gettrabajo() +' | ' +listaRegistros[i].GetfechaReg() +' |   ' +listaRegistros[i].GethoraInicio() +'  |  ' +'--:--:--' +'  | ' +listaRegistros[i].Getestado() +' | ' +listaRegistros[i].Getobvs() +'\n')
+                else:
+                    f.write(str((i + 1)) +'   | ' +listaRegistros[i].Gettrabajo() +' | ' +listaRegistros[i].GetfechaReg() +' |   ' +listaRegistros[i].GethoraInicio() +'  |  ' +listaRegistros[i].GethoraCierre() +'  | ' +listaRegistros[i].Getestado() +' | ' +listaRegistros[i].Getobvs() +'\n')
+            f.close()
+        else:
+            print('Export cancelado.\n')
+    else:
+        if listaRegistros is not None:
+            f = open(''+nombre , 'w')
+            f.write('NUM | Trabajo |  Fecha   | hora inicio | Hora Final | Estado  | Observaciones\n')
+            for i in range(x):
+                f.write(str((i + 1)) +'   | ' +listaRegistros[i].Gettrabajo() +' | ' +listaRegistros[i].GetfechaReg() +' |   ' +listaRegistros[i].GethoraInicio() +'  |  ' +listaRegistros[i].GethoraCierre() +'  | ' +listaRegistros[i].Getestado() +' | ' +listaRegistros[i].Getobvs() +'\n')
+            f.close()
 
 while True:
 
